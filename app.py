@@ -29,7 +29,8 @@ logging.basicConfig(
 with open('config.yaml', 'r', encoding='utf-8') as file:
     config = yaml.safe_load(file)
 
-PATIENT_DATA_CSV = config['paths']['patient_data']
+# Mettre à jour le chemin du fichier patient_data avec le protocole
+PATIENT_DATA_CSV = config['paths']['patient_data_with_protocol']  # Assurez-vous que ce chemin est correct
 NURSE_INPUTS_CSV = config['paths']['nurse_inputs']
 SIMULATED_EMA_CSV = config['paths']['simulated_ema_data']
 MADRS_ITEMS_MAPPING = config['mappings']['madrs_items']
@@ -178,9 +179,9 @@ if 'nurse_data' not in st.session_state:
 # Load simulated EMA data
 simulated_ema_data = load_simulated_ema_data(SIMULATED_EMA_CSV)
 
-# Définir les variables de Symptômes
-MADRS_ITEMS = [f'madrs_{i}' for i in range(1, 11)]      # madrs_1 à madrs_10
-ANXIETY_ITEMS = [f'anxiety_{i}' for i in range(1, 6)]  # anxiety_1 à anxiety_5
+# Define symptoms
+MADRS_ITEMS = [f'madrs_{i}' for i in range(1, 11)]
+ANXIETY_ITEMS = [f'anxiety_{i}' for i in range(1, 6)]
 SLEEP = 'sleep'
 ENERGY = 'energy'
 STRESS = 'stress'
@@ -260,16 +261,11 @@ def patient_dashboard():
             # Correction de l'affichage de "Sexe"
             sex = "Homme" if sex_numeric == '1' else "Femme" if sex_numeric == '2' else "Autre" if sex_numeric else "N/A"
             st.write(f"**Sexe :** {sex}")
-            education_years = patient_data.get('annees_education_bl', 'N/A')
-            st.write(f"**Années d'éducation (Baseline) :** {education_years}")
-            revenu_bl = patient_data.get('revenu_bl', 'N/A')
-            # Ajout du symbole '$' devant le revenu et formatage avec des virgules
-            try:
-                revenu_int = int(revenu_bl)
-                revenu_formate = f"${revenu_int:,}"
-            except:
-                revenu_formate = f"${revenu_bl}" if revenu_bl != 'N/A' else 'N/A'
-            st.write(f"**Revenu (Baseline) :** {revenu_formate}")
+            # Supprimer les informations suivantes
+            # st.write(f"**Années d'éducation (Baseline) :** {education_years}")
+            # st.write(f"**Revenu (Baseline) :** {revenu_formate}")
+            # Ajouter le protocole
+            st.write(f"**Protocole :** {patient_data.get('protocol', 'N/A')}")
         with col2:
             st.subheader("Objectifs SMART")
             # Charger les entrées infirmières pour ce patient depuis st.session_state
@@ -289,12 +285,11 @@ def patient_dashboard():
         col1, col2 = st.columns(2)
         with col1:
             st.subheader("Données Démographiques")
-            demog_labels = ["Sexe", "Âge", "Années d'éducation (Baseline)", "Revenu (Baseline)"]
+            demog_labels = ["Sexe", "Âge", "Protocole"]  # Ajusté pour inclure 'Protocole'
             demog_values = [
                 sex,
                 patient_data.get('age', 'N/A'),
-                education_years,
-                revenu_formate
+                patient_data.get('protocol', 'N/A')
             ]
             demog_df = pd.DataFrame({
                 "Paramètre": demog_labels,
