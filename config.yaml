@@ -1,6 +1,8 @@
 # config.yaml
 
 paths:
+paths:
+  patient_data_with_protocol: "patient_data_with_protocol.csv"  # Nouvelle clé ajoutée
   patient_data: "patient_data.csv"
   nurse_inputs: "nurse_inputs.csv"
   simulated_ema_data: "simulated_ema_data.csv"
@@ -24,3 +26,5 @@ mappings:
     Antagonisme: [17, 19, 20, 22, 25]
     Désinhibition: [1, 2, 3, 5, 6]
     Psychoticisme: [7, 12, 21, 23, 24]
+
+
