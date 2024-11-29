@@ -1,0 +1,26 @@
+# config.yaml
+
+paths:
+  patient_data: "patient_data.csv"
+  nurse_inputs: "nurse_inputs.csv"
+  simulated_ema_data: "simulated_ema_data.csv"
+
+mappings:
+  madrs_items:
+    1: "Tristesse Apparente"
+    2: "Tristesse Signalée"
+    3: "Tension Intérieure"
+    4: "Sommeil Réduit"
+    5: "Appétit Réduit"
+    6: "Difficultés de Concentration"
+    7: "Lassitude"
+    8: "Incapacité à Ressentir"
+    9: "Pensées Pessimistes"
+    10: "Pensées Suicidaires"
+
+  pid5_dimensions:
+    Affect Négatif: [8, 9, 10, 11, 15]
+    Détachement: [4, 13, 14, 16, 18]
+    Antagonisme: [17, 19, 20, 22, 25]
+    Désinhibition: [1, 2, 3, 5, 6]
+    Psychoticisme: [7, 12, 21, 23, 24]
